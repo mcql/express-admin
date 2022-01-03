@@ -8,6 +8,7 @@ import checkToken from './utils/checkToken'
 import fileUpload from 'express-fileupload'
 import uploadApi from './utils/upload'
 import path from 'path'
+import menuApi from './routes/menu'
 
 const exp = () => {
   const app = express()
@@ -43,6 +44,7 @@ const exp = () => {
       console.log(err)
     })
   userApi(app)
+  menuApi(app)
   loginApi(app)
   uploadApi(app)
 }
