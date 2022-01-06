@@ -1,4 +1,4 @@
-import { Menu } from '../models'
+import Menu from '../models/menu'
 import { Request, Response } from 'express'
 //
 // interface objInterface {
@@ -33,7 +33,7 @@ const create = async (req: Request, res: Response) => {
     const MenuInfo = {
       title: req.body.title,
       value: req.body.value,
-      pid: req.body.pid || 0,
+      pid: req.body.pid || [0],
       icon: req.body.icon || '',
       path: req.body.path || '',
       file: req.body.file || ''
@@ -112,9 +112,11 @@ const findAll = async (req: Request, res: Response) => {
 function treeData(source: any) {
   const cloneData = JSON.parse(JSON.stringify(source)) // 对源数据深度克隆
   return cloneData.filter((father: any) => {
-    const branchArr = cloneData.filter((child: any) => father.id == child.pid) //返回每一项的子级数组
+    const branchArr = cloneData.filter(
+      (child: any) => father.id == child.pid[child.pid.length - 1]
+    ) //返回每一项的子级数组
     branchArr.length > 0 ? (father.children = branchArr) : '' //如果存在子级，则给父级添加一个children属性，并赋值
-    return father.pid == '0' //返回第一层
+    return father.pid[father.pid.length - 1] == '0' //返回第一层
   })
 }
 

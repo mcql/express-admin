@@ -1,8 +1,9 @@
 import { DATE, NUMBER, STRING } from 'sequelize'
+import seq from '../dbConnect'
 
-const Menu = {
-  modelName: 'm_menu',
-  attribute: {
+const menu = seq.define(
+  'm_menu',
+  {
     id: {
       type: NUMBER,
       primaryKey: true
@@ -14,7 +15,17 @@ const Menu = {
       type: STRING
     },
     pid: {
-      type: NUMBER
+      type: STRING,
+      get() {
+        return this.getDataValue('pid')
+          .split(';')
+          .map((item: any) => {
+            return parseInt(item)
+          })
+      },
+      set(val: any) {
+        this.setDataValue('pid', val.join(';'))
+      }
     },
     icon: {
       type: STRING
@@ -32,10 +43,10 @@ const Menu = {
       type: DATE
     }
   },
-  options: {
+  {
     freezeTableName: true,
     timestamps: false
   }
-}
+)
 
-export default Menu
+export default menu
