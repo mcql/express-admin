@@ -36,7 +36,8 @@ const create = async (req: Request, res: Response) => {
       pid: req.body.pid || [0],
       icon: req.body.icon || '',
       path: req.body.path || '',
-      file: req.body.file || ''
+      file: req.body.file || '',
+      show: req.body.show || false
     }
     try {
       await Menu.create(MenuInfo)
@@ -58,7 +59,8 @@ const updateMenu = async (req: Request, res: Response) => {
     pid: req.body.pid || 0,
     icon: req.body.icon || '',
     path: req.body.path || '',
-    file: req.body.file || ''
+    file: req.body.file || '',
+    show: req.body.show || false
   }
   try {
     await Menu.update(menuInfo, {
@@ -116,7 +118,7 @@ function treeData(source: any) {
       (child: any) => father.id == child.pid[child.pid.length - 1]
     ) //返回每一项的子级数组
     branchArr.length > 0 ? (father.children = branchArr) : '' //如果存在子级，则给父级添加一个children属性，并赋值
-    return father.pid[father.pid.length - 1] == '0' //返回第一层
+    return father.pid[father.pid.length - 1] == '-1' //返回第一层
   })
 }
 

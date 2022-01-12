@@ -1,4 +1,4 @@
-import { DATE, NUMBER, STRING } from 'sequelize'
+import { BOOLEAN, DATE, NUMBER, STRING } from 'sequelize'
 import seq from '../dbConnect'
 
 const menu = seq.define(
@@ -35,6 +35,9 @@ const menu = seq.define(
     },
     file: {
       type: STRING
+    },
+    show: {
+      type: BOOLEAN
     },
     createAt: {
       type: DATE
